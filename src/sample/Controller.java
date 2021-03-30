@@ -21,6 +21,6 @@ public class Controller {
         ObservableList<String> items = FXCollections.observableArrayList (
                 "Single", "Double", "Suite", "Family App");
         local.setItems(items);
-
+        server.setItems(items);
     }
 }
