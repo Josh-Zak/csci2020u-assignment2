@@ -38,6 +38,6 @@ public class ServerThread extends Thread{
 
     protected boolean process(){
 
-
+        return true; //TEMP
     }
 }
