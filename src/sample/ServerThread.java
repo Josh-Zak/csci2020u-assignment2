@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.StringTokenizer;
 
 public class ServerThread extends Thread{
     protected Socket socket = null;
@@ -37,7 +38,35 @@ public class ServerThread extends Thread{
     }
 
     protected boolean process(){
+        String message = null;
+        try{
+            message = in.readLine();
+        }catch(Exception e){
+            e.printStackTrace();
+            return true;
+        }
+        if(message == null){
+            return true;
+        }
+        StringTokenizer tokenizer = new StringTokenizer(message);
+        String command = tokenizer.nextToken();
+        String args = null;
+        if(tokenizer.hasMoreTokens()){
+            args = message.substring(command.length() + 1, message.length());
+        }
+        return process(command, args);
+    }
 
-        return true; //TEMP
+    protected boolean process(String command, String args){
+        if(command.equalsIgnoreCase("DIR")){
+            return true;
+        }else if(command.equalsIgnoreCase("UPLOAD")){
+            return true;
+        }else if(command.equalsIgnoreCase("DOWNLOAD")){
+            return true;
+        }else{
+            out.println("Not a command");
+            return true;
+        }
     }
 }
