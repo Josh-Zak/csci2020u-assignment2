@@ -43,7 +43,7 @@ public class ServerHandler implements Runnable {
             if(command.equalsIgnoreCase("DIR")){
                 File baseDir = new File("www");
             }else{
-                
+
             }
         }
         } catch(NoSuchElementException e) {
