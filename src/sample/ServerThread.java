@@ -59,6 +59,7 @@ public class ServerThread extends Thread{
 
     protected boolean process(String command, String args){
         if(command.equalsIgnoreCase("DIR")){
+
             return true;
         }else if(command.equalsIgnoreCase("UPLOAD")){
             return true;
