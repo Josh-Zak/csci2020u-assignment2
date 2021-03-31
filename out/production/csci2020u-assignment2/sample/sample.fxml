@@ -11,9 +11,9 @@
 <GridPane fx:controller="sample.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="top_left" hgap="10" vgap="10">
     <MenuBar GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <Menu fx:id = "download" text = "DOWNLOAD">
+        <Menu fx:id = "download" text = "DOWNLOAD" onAction="#downloadAction">
         </Menu>
-        <Menu fx:id = "upload" text ="UPLOAD">
+        <Menu fx:id = "upload" text ="UPLOAD" onAction="#uploadAction">
         </Menu>
     </MenuBar>
     <SplitPane fx:id = "fileList" GridPane.rowIndex="1" GridPane.columnIndex="0" dividerPositions="0.5" >

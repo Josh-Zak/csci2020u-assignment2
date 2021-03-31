@@ -45,8 +45,7 @@ public class ServerHandler implements Runnable {
             }else{
 
             }
-        }
-        } catch(NoSuchElementException e) {
+        }catch(NoSuchElementException e) {
             e.printStackTrace();
         }
     }
