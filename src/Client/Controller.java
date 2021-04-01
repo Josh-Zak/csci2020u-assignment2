@@ -24,6 +24,7 @@ public class Controller {
         local.setItems(items);
         server.setItems(items);
         fileShareClient = new Client();
+
     }
 
     @FXML

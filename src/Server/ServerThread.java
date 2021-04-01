@@ -16,19 +16,16 @@ public class ServerThread extends Thread{
         super();
         this.socket = socket;
         try{
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true); //write stuff to the client
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream())); //read stuff from the client
         }catch(Exception e){
             e.printStackTrace();
         }
     }
-
+// we can merge ServerHandler and ServerThread into 1
     public void run(){
-        out.println("Connected to Server");
-        boolean endOfSession = false;
-        while(!endOfSession){
-            endOfSession = process();
-        }
+        out.println("Connected to Server"); // print the message to the client
+        process();
         try{
             socket.close();
         }catch(Exception e){
@@ -36,7 +33,7 @@ public class ServerThread extends Thread{
         }
 
     }
-
+// handle the request from the client in this function
     protected boolean process(){
         String message = null;
         try{
@@ -61,14 +58,14 @@ public class ServerThread extends Thread{
 
     protected boolean process(String command, String args){
         if(command.equalsIgnoreCase("DIR")){
-            System.out.println("dir");
+            out.println("dir");
             return true;
         }else if(command.equalsIgnoreCase("UPLOAD")){
-            System.out.println("upload");
+            out.println("upload");
 //in.print(file contents) to the new file on server side
             return true;
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
-            System.out.println("download");
+            out.println("download");
 //out.print(file contents) to the new file on the client side
             return true;
         }else{
@@ -77,7 +74,7 @@ public class ServerThread extends Thread{
         }
     }
 
-
+// create 3 functions to handle the commands from the client
 
 
 

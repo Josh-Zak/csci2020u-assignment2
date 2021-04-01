@@ -9,34 +9,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client extends Frame {
-//    public static void main(String args[]) {
-//        BufferedReader in;
-//        PrintWriter out;
-//
-//        String hostName = args[0];
-//        int port = 16789;
-//        if(args.length > 1) {
-//            port = Integer.parseInt(args[1]);
-//        }
-//        try {
-//            Socket socket = new Socket(hostName,port);
-//            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            out = new PrintWriter(socket.getOutputStream());
-//            String message = in.readLine();
-//            while (message != null) {
-//                System.out.println(message);
-//            }
-//            in.close();
-//            out.close();
-//            socket.close();
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
