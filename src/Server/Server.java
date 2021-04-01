@@ -1,4 +1,4 @@
-package sample;
+package Server;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,7 +14,7 @@ public class Server {
 
     public Server(){
         try{
-            serverSocket = new ServerSocket(numClients);
+            serverSocket = new ServerSocket(SERVER_PORT);
             System.out.println("Application is Running");
             System.out.println("Listening to port " + SERVER_PORT);
             threads = new ServerThread[MAX_CLIENTS];
@@ -28,5 +28,9 @@ public class Server {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args){
+        Server fileShareServer = new Server();
     }
 }
