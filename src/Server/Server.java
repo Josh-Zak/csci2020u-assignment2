@@ -7,8 +7,8 @@ import java.net.Socket;
 public class Server {
     protected Socket clientSocket = null;
     protected ServerSocket serverSocket = null;
-    protected ServerThread threads = null;
-    public static int SERVER_PORT;
+    protected ServerThread handler = null;
+    private int SERVER_PORT;
 
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
@@ -17,15 +17,16 @@ public class Server {
 
     public void handleRequests() {
         try{
-            serverSocket = new ServerSocket(SERVER_PORT);
             System.out.println("Application is Running");
             System.out.println("Listening to port " + SERVER_PORT);
             while(true){
                 clientSocket = serverSocket.accept();
-                threads = new ServerThread(clientSocket);
-                //Thread handlerThread = new Thread(threads);
-                //handlerThread.start();
-                threads.start();
+
+                handler = new ServerThread(clientSocket);
+
+                Thread handlerThread = new Thread(handler);
+
+                handlerThread.start();
                 // no need for destroying the client
             }
         }catch(Exception e){

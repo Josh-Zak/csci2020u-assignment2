@@ -1,2 +1,0 @@
-This is a test document.
-This should be showing up on the command prompt
