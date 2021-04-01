@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 
 public class Client extends Frame {
 //figure out how to connect this to the controller and the UI
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         BufferedReader in;
         PrintWriter out;
 
