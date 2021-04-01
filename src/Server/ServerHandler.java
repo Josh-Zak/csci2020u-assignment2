@@ -1,9 +1,10 @@
-package sample;
+package Server;
+
 import java.io.*;
 import java.net.*;
 import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
-import java.util.Date;
+
 public class ServerHandler implements Runnable {
 
     private Socket socket = null;
@@ -49,6 +50,4 @@ public class ServerHandler implements Runnable {
             e.printStackTrace();
         }
     }
-
-
 }

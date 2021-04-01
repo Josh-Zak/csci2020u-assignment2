@@ -1,4 +1,4 @@
-package sample;
+package Client;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,12 +9,12 @@ import javafx.scene.control.ListView;
 
 
 public class Controller {
-
-//find out how to connect this to the client for the UI
     @FXML
     ListView local;
     @FXML
     ListView server;
+
+    Client fileShareClient = null;
 
     @FXML
     public void initialize() {
@@ -23,14 +23,18 @@ public class Controller {
                 "Single", "Double", "Suite", "Family App");
         local.setItems(items);
         server.setItems(items);
+        fileShareClient = new Client();
     }
 
     @FXML
     public void downloadAction(ActionEvent event){
 //figure out how to implement this into the serverHandler
+        fileShareClient.send("download");
+
     }
     @FXML
     public void uploadAction(ActionEvent event){
 //figure out how to implement this into the serverHandler
+        fileShareClient.send("upload");
     }
 }
