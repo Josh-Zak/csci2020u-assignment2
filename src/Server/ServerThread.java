@@ -53,7 +53,8 @@ public class ServerThread extends Thread{
         if(null != args) {
             return process(command, args);
         }else{
-            return process(command);
+            System.err.println("No arguments given");
+            return true;
         }
 
     }
@@ -93,10 +94,6 @@ public class ServerThread extends Thread{
         }
         return fileList;
     }
-
-
-
-
 
 
 

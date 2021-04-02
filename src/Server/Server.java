@@ -23,11 +23,8 @@ public class Server {
             System.out.println("Listening to port " + SERVER_PORT);
             while(true){
                 clientSocket = serverSocket.accept();
-
                 handler = new ServerThread(clientSocket);
-
                 Thread handlerThread = new Thread(handler);
-
                 handlerThread.start();
                 // no need for destroying the client
             }
