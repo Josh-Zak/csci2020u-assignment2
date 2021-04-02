@@ -16,9 +16,11 @@ public class Client extends Frame {
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
-    public static List<String> argument = controllerHandler.getArgs();
-    public static String SERVER_ADDRESS = argument.get(1);
-    public static int SERVER_PORT = Integer.parseInt(argument.get(0));
+    public static String SERVER_ADDRESS = Main.getArgs().get(1);
+    public static int SERVER_PORT = Integer.parseInt(Main.getArgs().get(0));
+//    public static List<String> argument = controllerHandler.getArgs();
+//    public static String SERVER_ADDRESS = argument.get(1);
+//    public static int SERVER_PORT = Integer.parseInt(argument.get(0));
 
     public Client(){
         try{

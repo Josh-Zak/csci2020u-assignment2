@@ -25,15 +25,29 @@ public class Controller {
         return argument;
     }
     Client fileShareClient = null;
+//    @FXML
+//    public void initialize() {
+//        ListView<String> list = new ListView<String>();
+//        ObservableList<String> items = FXCollections.observableArrayList (
+//                "Single", "Double", "Suite", "Family App");
+//        local.setItems(items);
+//        server.setItems(items);
+//        fileShareClient = new Client();
+//        setArgs(Main.getArgs());
+//        System.out.println(argument);
+//
+//    }
+
     @FXML
-    public void initialize() {
+    public void init(){
         ListView<String> list = new ListView<String>();
         ObservableList<String> items = FXCollections.observableArrayList (
                 "Single", "Double", "Suite", "Family App");
         local.setItems(items);
         server.setItems(items);
         fileShareClient = new Client();
-
+        setArgs(Main.getArgs());
+        System.out.println(argument);
     }
     //Download button: create a new file in the client shared folder(clientFile)
     // read the selected file from the server shared folder(serverFile)
