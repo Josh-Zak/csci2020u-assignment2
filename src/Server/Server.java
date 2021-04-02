@@ -11,7 +11,6 @@ public class Server {
     protected ServerSocket serverSocket = null;
     protected ServerThread handler = null;
     private int SERVER_PORT;
-    public List<String> list1 = getParameters().getRaw();
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         this.SERVER_PORT = port;

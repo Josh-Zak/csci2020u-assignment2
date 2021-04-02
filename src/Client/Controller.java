@@ -16,6 +16,14 @@ public class Controller {
     @FXML
     ListView server;
 
+    public List<String> argument;
+
+    public void setArgs(List<String> arguments) {
+        argument = arguments;
+    }
+    public List<String> getArgs() {
+        return argument;
+    }
     Client fileShareClient = null;
     @FXML
     public void initialize() {
@@ -27,13 +35,22 @@ public class Controller {
         fileShareClient = new Client();
 
     }
+    //Download button: create a new file in the client shared folder(clientFile)
+    // read the selected file from the server shared folder(serverFile)
+    // copy the text to the clientFile
+    // delete the file in the server shared folder
 
+    // alternative solution: get the path to the server shared folder and get the path to client shared folder
+    // Files.move(source, target)
+    // not sure if it could work when connecting to the server
     @FXML
     public void downloadAction(ActionEvent event){
 //figure out how to implement this into the serverHandler
         fileShareClient.send("download");
 
     }
+
+    //
     @FXML
     public void uploadAction(ActionEvent event){
 //figure out how to implement this into the serverHandler
