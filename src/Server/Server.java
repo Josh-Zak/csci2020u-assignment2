@@ -3,13 +3,15 @@ package Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+
 
 public class Server {
     protected Socket clientSocket = null;
     protected ServerSocket serverSocket = null;
     protected ServerThread handler = null;
     private int SERVER_PORT;
-
+    public List<String> list1 = getParameters().getRaw();
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         this.SERVER_PORT = port;

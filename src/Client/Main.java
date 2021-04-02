@@ -16,8 +16,8 @@ public class Main extends Application {
         primaryStage.setTitle("Assignment 2");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-        List<String> list1 = getParameters().getRaw();
-        System.out.println(list1.get(0));
+//        List<String> list1 = getParameters().getRaw();
+//        System.out.println(list1.get(0));
     }
 
 

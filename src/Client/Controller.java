@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
+import java.util.List;
 
 
 public class Controller {
@@ -15,7 +16,6 @@ public class Controller {
     ListView server;
 
     Client fileShareClient = null;
-
     @FXML
     public void initialize() {
         ListView<String> list = new ListView<String>();
