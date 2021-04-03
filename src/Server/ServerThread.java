@@ -3,11 +3,12 @@ package Server;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.StringTokenizer;
 
 public class ServerThread extends Thread{
     protected Socket socket = null;
-    protected PrintWriter out = null;
+    protected static PrintWriter out = null;
     protected BufferedReader in = null;
 
     // create a field that stores the list of the contents of the shared folder
@@ -22,18 +23,22 @@ public class ServerThread extends Thread{
             e.printStackTrace();
         }
     }
-// we can merge ServerHandler and ServerThread into 1
+
     public void run(){
         out.println("Connected to Server"); // print the message to the client
         String line = null;
         try {
-            line = in.readLine();
-            process(line);
+            while((line = in.readLine()) != null){
+                process(line);
+                if(line.equals("quit")){
+                    in.close();
+                    break;
+                }
+            }
         }catch(IOException e) {
             e.printStackTrace();
         }
         try{
-            in.close();
             out.close();
             socket.close();
         }catch(Exception e){
@@ -42,7 +47,7 @@ public class ServerThread extends Thread{
 
     }
 // handle the request from the client in this function
-    protected void process(String message){
+    protected void process(String message) throws IOException {
         StringTokenizer tokenizer = new StringTokenizer(message);
         String command = tokenizer.nextToken(); //first token of the message, usually the command
         String args = null;
@@ -58,30 +63,30 @@ public class ServerThread extends Thread{
 
     }
 
-    protected void process(String command, String args){
+    protected void process(String command, String args) throws IOException {
         if(command.equalsIgnoreCase("DIR")){
             out.println("dir");
-            String[] fileName = handleDir(args);
+            String[] fileName = handleDir(new File("./src/"+args));
             for(String files:fileName){
                 out.println(files);
             }
         }else if(command.equalsIgnoreCase("UPLOAD")){
-            //handleUpload();
+            File baseDir = new File("test");
+            handleUpload(baseDir,"text.txt");
             out.println("upload");
 //in.print(file contents) to the new file on server side
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
             //handleDownload();
-            out.println("download");
+            out.println("download test");
 //out.print(file contents) to the new file on the client side
         }else{
             out.println("Not a command");
         }
     }
-
-// create 3 functions to handle the commands from the client
-
-    // Returns a listing of the contents of the shared folder
-    public String[] handleDir(String folderPath){
+    //TODO:
+// create a function to load the contents of the shared folder in the client
+// which is that handleDir is doing at the moment
+    public static String[] clientFolder(String folderPath) {
         File file = new File(folderPath);
         if(!file.exists()){
             System.err.println("The folder doesn't exist. Please try again.");
@@ -89,13 +94,44 @@ public class ServerThread extends Thread{
         String[] fileList = file.list();
         return fileList;
     }
+// create 3 functions to handle the commands from the client
+
+    // Returns a listing of the contents of the shared folder in the client (filename in the client folder)
+    // and load it to the server shared folder
+    public static String[] handleDir(File clientFolder) throws IOException {
+        Files.createDirectories(Paths.get("./src/shared"));
+        File serverFolder = new File("./src/shared");
+        String line = "";
+        if(serverFolder.mkdir()){
+            System.out.println("New folder created");
+        }
+        String[] clientFiles = clientFolder.list();
+        for(int i=0;i< clientFiles.length;i++){
+            try{
+                File copyFile = new File(serverFolder,clientFiles[i]);
+                File ogFile = new File(clientFolder, clientFiles[i]);
+                FileWriter fw = new FileWriter(copyFile);
+                BufferedReader br = new BufferedReader(new FileReader(ogFile));
+                while((line = br.readLine())!= null) {
+                    fw.write(line);
+                    fw.write("\n");
+                }
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        String[] serverFiles = serverFolder.list();
+        return serverFiles;
+    }
     // functionality of upload: we have the parameter as the path to the shared folder of the local client
     // create a new shared folder for the server if not created
     // read the text from the selected file from the client folder (fileName)
     // create a new file in the server folder (copyFile) and write all of the texts from fileName to copyFile
     public void handleUpload(File baseDir,String fileName) {
         File clientFile = new File(baseDir, fileName);
-        File serverFile = new File("./shared");
+        File serverFile = new File("./src/shared");
         String line = "";
 
         if (!clientFile.exists()) {
@@ -106,6 +142,7 @@ public class ServerThread extends Thread{
                 BufferedReader br = new BufferedReader(new FileReader(clientFile));
                 while((line = br.readLine())!= null) {
                     fw.write(line);
+                    out.println(line);
                 }
             }catch(IOException e) {
                 e.printStackTrace();
@@ -115,8 +152,8 @@ public class ServerThread extends Thread{
 
     //functionality of download: read the text in the fileName file,
     // print out the text on the client console
-    public void handleDownload(String fileName){
-        File serverFile = new File("shared",fileName);
+    public static void handleDownload(String fileName){
+        File serverFile = new File("./src/shared",fileName);
         String line = "";
         if(!serverFile.exists()){
             System.err.println("The file " + serverFile + " could not be located.");
@@ -125,7 +162,7 @@ public class ServerThread extends Thread{
             try {
                 BufferedReader br = new BufferedReader(new FileReader(serverFile));
                 while((line = br.readLine()) != null) {
-                    out.println(line);
+                    System.out.println(line);
                 }
             }catch(IOException e) {
                 e.printStackTrace();
