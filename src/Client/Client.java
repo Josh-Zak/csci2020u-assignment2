@@ -49,4 +49,10 @@ public class Client extends Frame {
     protected void send(String msg){
         out.println(msg);
     }
+
+    protected void listen() throws IOException {
+        String message = in.readLine();//Receives response after giving dir/download/upload (msg from server)
+        System.out.println(message);
+        socket.close();
+    }
 }

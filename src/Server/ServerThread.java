@@ -42,7 +42,7 @@ public class ServerThread extends Thread{
 
     }
 // handle the request from the client in this function
-    protected boolean process(String message){
+    protected void process(String message){
         StringTokenizer tokenizer = new StringTokenizer(message);
         String command = tokenizer.nextToken(); //first token of the message, usually the command
         String args = null;
@@ -51,35 +51,30 @@ public class ServerThread extends Thread{
             args = message.substring(command.length() + 1, message.length());
         }
         if(null != args) {
-            return process(command, args);
+            process(command, args);
         }else{
             System.err.println("No arguments given");
-            return true;
         }
 
     }
 
-    protected boolean process(String command, String args){
+    protected void process(String command, String args){
         if(command.equalsIgnoreCase("DIR")){
             out.println("dir");
             String[] fileName = handleDir(args);
             for(String files:fileName){
                 out.println(files);
             }
-            return true;
         }else if(command.equalsIgnoreCase("UPLOAD")){
             //handleUpload();
             out.println("upload");
 //in.print(file contents) to the new file on server side
-            return true;
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
             //handleDownload();
             out.println("download");
 //out.print(file contents) to the new file on the client side
-            return true;
         }else{
             out.println("Not a command");
-            return true;
         }
     }
 

@@ -26,7 +26,6 @@ public class Main extends Application {
         primaryStage.setTitle("Assignment 2");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-
     }
 
 

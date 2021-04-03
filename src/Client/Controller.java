@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -58,16 +59,17 @@ public class Controller {
     // Files.move(source, target)
     // not sure if it could work when connecting to the server
     @FXML
-    public void downloadAction(ActionEvent event){
+    public void downloadAction(ActionEvent event) throws IOException{
 //figure out how to implement this into the serverHandler
-        fileShareClient.send("download");
-
+        fileShareClient.send("download " + Main.getArgs().get(2));
+        fileShareClient.listen();
     }
 
     //
     @FXML
-    public void uploadAction(ActionEvent event){
+    public void uploadAction(ActionEvent event) throws IOException{
 //figure out how to implement this into the serverHandler
-        fileShareClient.send("upload");
+        fileShareClient.send("upload " + Main.getArgs().get(2));
+        fileShareClient.listen();
     }
 }
