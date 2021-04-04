@@ -51,7 +51,7 @@ public class ServerThread extends Thread{
         String args = null;
         if(tokenizer.hasMoreTokens()){
             // if the message has more than 2 arguments, pass from the second word in the message as args
-            args = message.substring(command.length() + file.length() + 1, message.length());
+            args = message.substring(command.length() + file.length() + 2, message.length());
         }
         if(null != args) {
             process(command, file, args);
@@ -71,7 +71,7 @@ public class ServerThread extends Thread{
             out.println("upload shared");
 //in.print(file contents) to the new file on server side
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
-            handleDownload(file);
+            handleDownload(file, args);
             out.println("download shared");
 //out.print(file contents) to the new file on the client side
         }else{
@@ -131,9 +131,10 @@ public class ServerThread extends Thread{
 
     //functionality of download: read the text in the fileName file,
     // print out the file to the client
-    public static void handleDownload(String fileName){
+    public void handleDownload(String fileName, String args){
+        System.out.println(args);
         File serverFile = new File("./src/shared",fileName);
-        File clientFile = new File("./src/test", fileName);
+        File clientFile = new File("./src/" + args, fileName);
         String line = "";
         if(!serverFile.exists()){
             System.err.println("The file " + serverFile + " could not be located.");
