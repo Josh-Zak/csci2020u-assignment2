@@ -46,31 +46,35 @@ public class ServerThread extends Thread{
     protected void process(String message) throws IOException {
         StringTokenizer tokenizer = new StringTokenizer(message);
         String command = tokenizer.nextToken(); //first token of the message, usually the command
+        String file = tokenizer.nextToken();
         String args = null;
         if(tokenizer.hasMoreTokens()){
             // if the message has more than 2 arguments, pass from the second word in the message as args
-            args = message.substring(command.length() + 1, message.length());
+            args = message.substring(command.length() + file.length() + 1, message.length());
         }
         if(null != args) {
-            process(command, args);
+            process(command, file, args);
         }else{
             System.err.println("No arguments given");
         }
 
     }
 
-    protected void process(String command, String args) throws IOException {
+    protected void process(String command, String file, String args) throws IOException {
         if(command.equalsIgnoreCase("DIR")){
             out.println("dir");
             String[] fileName = handleDir();
         }else if(command.equalsIgnoreCase("UPLOAD")){
             File baseDir = new File("./src/test");
+<<<<<<< HEAD
             handleUpload(baseDir,"text.txt");
             out.println("upload shared");
+=======
+            handleUpload(baseDir,file);
+>>>>>>> 3633f59493513ca03ff65316ce424a4d6a01f3db
 //in.print(file contents) to the new file on server side
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
-            //handleDownload();
-            out.println("download test");
+            handleDownload(file);
 //out.print(file contents) to the new file on the client side
         }else{
             out.println("Not a command");

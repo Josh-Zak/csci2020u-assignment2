@@ -58,7 +58,8 @@ public class Controller {
     @FXML
     public void downloadAction(ActionEvent event) throws IOException{
 //figure out how to implement this into the serverHandler
-        String downloadMessage = "DOWNLOAD " + argument.get(2);
+        String selected = server.getSelectionModel().getSelectedItem().toString();
+        String downloadMessage = "DOWNLOAD " + selected + " " + argument.get(2);
         fileShareClient.send(downloadMessage);
         fileShareClient.listen();
     }
@@ -67,7 +68,9 @@ public class Controller {
     @FXML
     public void uploadAction(ActionEvent event) throws IOException{
 //figure out how to implement this into the serverHandler
-        fileShareClient.send("UPLOAD " + argument.get(2));
+        String selected = local.getSelectionModel().getSelectedItem().toString();
+        String uploadMessage = "UPLOAD " + selected + " " + argument.get(2);
+        fileShareClient.send(uploadMessage);
         fileShareClient.listen();
     }
 }

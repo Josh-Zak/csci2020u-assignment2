@@ -8,13 +8,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 <GridPane fx:controller="Client.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="top_left" hgap="10" vgap="10" style="-fx-background-color: RED" >
+          xmlns:fx="http://javafx.com/fxml" alignment="top_left" hgap="10" vgap="10" >
     <HBox spacing="2" GridPane.rowIndex="0" GridPane.columnIndex="0">
         <Button fx:id = "download" text = "DOWNLOAD" onAction="#downloadAction" GridPane.rowIndex="0" GridPane.columnIndex="0" ></Button>
         <Button fx:id = "upload" text = "UPLOAD" onAction="#uploadAction" GridPane.rowIndex="0" GridPane.columnIndex="1"></Button>
     </HBox>
 
-    <SplitPane fx:id = "fileList" GridPane.rowIndex="1" GridPane.columnIndex="0" dividerPositions="0.5" style="-fx-background-color: RED">
+    <SplitPane fx:id = "fileList" GridPane.rowIndex="1" GridPane.columnIndex="0" dividerPositions="0.5" >
         <items >
             <ListView fx:id="local" prefHeight="200" prefWidth="200"></ListView>
             <ListView fx:id="server"></ListView>
