@@ -71,7 +71,7 @@ public class ServerThread extends Thread{
                 out.println(files);
             }
         }else if(command.equalsIgnoreCase("UPLOAD")){
-            File baseDir = new File("test");
+            File baseDir = new File("./src/test");
             handleUpload(baseDir,"text.txt");
             out.println("upload");
 //in.print(file contents) to the new file on server side
@@ -91,8 +91,7 @@ public class ServerThread extends Thread{
         if(!file.exists()){
             System.err.println("The folder doesn't exist. Please try again.");
         }
-        String[] fileList = file.list();
-        return fileList;
+        return file.list();
     }
 // create 3 functions to handle the commands from the client
 
@@ -113,8 +112,7 @@ public class ServerThread extends Thread{
                 FileWriter fw = new FileWriter(copyFile);
                 BufferedReader br = new BufferedReader(new FileReader(ogFile));
                 while((line = br.readLine())!= null) {
-                    fw.write(line);
-                    fw.write("\n");
+                    fw.write(line + "\n");
                 }
                 fw.close();
             } catch (IOException e) {
@@ -131,9 +129,10 @@ public class ServerThread extends Thread{
     // create a new file in the server folder (copyFile) and write all of the texts from fileName to copyFile
     public void handleUpload(File baseDir,String fileName) {
         File clientFile = new File(baseDir, fileName);
-        File serverFile = new File("./src/shared");
-        String line = "";
+//ADDED FILENAME SO WE CAN WRITE TO IT
+        File serverFile = new File("./src/shared", fileName);
 
+        String line = "";
         if (!clientFile.exists()) {
             System.err.println("The file " + clientFile + " could not be located.");
         } else {
@@ -142,6 +141,8 @@ public class ServerThread extends Thread{
                 BufferedReader br = new BufferedReader(new FileReader(clientFile));
                 while((line = br.readLine())!= null) {
                     fw.write(line);
+
+//DONT THINK WE NEED TO OUT.PRINT IT
                     out.println(line);
                 }
             }catch(IOException e) {
@@ -151,18 +152,20 @@ public class ServerThread extends Thread{
     }
 
     //functionality of download: read the text in the fileName file,
-    // print out the text on the client console
+    // print out the file to the client
     public static void handleDownload(String fileName){
         File serverFile = new File("./src/shared",fileName);
+        File clientFile = new File("./src/test", fileName);
         String line = "";
         if(!serverFile.exists()){
             System.err.println("The file " + serverFile + " could not be located.");
         }
         else {
             try {
+                FileWriter fw = new FileWriter(clientFile);
                 BufferedReader br = new BufferedReader(new FileReader(serverFile));
                 while((line = br.readLine()) != null) {
-                    System.out.println(line);
+                    fw.write(line);
                 }
             }catch(IOException e) {
                 e.printStackTrace();
@@ -170,22 +173,4 @@ public class ServerThread extends Thread{
         }
     }
 
-    //this method is for testing
-//    protected boolean process(String command){
-//        if(command.equalsIgnoreCase("DIR")){
-//            System.out.println("dir");
-//            return true;
-//        }else if(command.equalsIgnoreCase("UPLOAD")){
-//            System.out.println("upload");
-////in.print(file contents) to the new file on server side
-//            return true;
-//        }else if(command.equalsIgnoreCase("DOWNLOAD")){
-//            System.out.println("download");
-////out.print(file contents) to the new file on the client side
-//            return true;
-//        }else{
-//            out.println("Not a command");
-//            return true;
-//        }
-//    }
 }

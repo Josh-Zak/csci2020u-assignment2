@@ -21,6 +21,7 @@ public class Controller {
 
     public List<String> argument;
 
+
     public void setArgs(List<String> arguments) {
         argument = arguments;
     }
