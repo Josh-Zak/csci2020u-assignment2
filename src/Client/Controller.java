@@ -33,7 +33,7 @@ public class Controller {
     @FXML
     public void init() throws IOException {
         String[] clientList = ServerThread.clientFolder("./src/" + argument.get(2));
-        String[] serverList = ServerThread.handleDir(new File("./src/" + argument.get(2)));
+        String[] serverList = ServerThread.handleDir();
         ObservableList<String> items1 = FXCollections.observableArrayList (
                 clientList);
         ObservableList<String> items2 = FXCollections.observableArrayList (

@@ -30,10 +30,6 @@ public class ServerThread extends Thread{
         try {
             while((line = in.readLine()) != null){
                 process(line);
-                if(line.equals("quit")){
-                    in.close();
-                    break;
-                }
             }
         }catch(IOException e) {
             e.printStackTrace();
@@ -66,14 +62,11 @@ public class ServerThread extends Thread{
     protected void process(String command, String args) throws IOException {
         if(command.equalsIgnoreCase("DIR")){
             out.println("dir");
-            String[] fileName = handleDir(new File("./src/"+args));
-            for(String files:fileName){
-                out.println(files);
-            }
+            String[] fileName = handleDir();
         }else if(command.equalsIgnoreCase("UPLOAD")){
             File baseDir = new File("./src/test");
             handleUpload(baseDir,"text.txt");
-            out.println("upload");
+            out.println("upload shared");
 //in.print(file contents) to the new file on server side
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
             //handleDownload();
@@ -97,38 +90,24 @@ public class ServerThread extends Thread{
 
     // Returns a listing of the contents of the shared folder in the client (filename in the client folder)
     // and load it to the server shared folder
-    public static String[] handleDir(File clientFolder) throws IOException {
+    public static String[] handleDir() throws IOException {
         Files.createDirectories(Paths.get("./src/shared"));
         File serverFolder = new File("./src/shared");
-        String line = "";
         if(serverFolder.mkdir()){
             System.out.println("New folder created");
         }
-        String[] clientFiles = clientFolder.list();
-        for(int i=0;i< clientFiles.length;i++){
-            try{
-                File copyFile = new File(serverFolder,clientFiles[i]);
-                File ogFile = new File(clientFolder, clientFiles[i]);
-                FileWriter fw = new FileWriter(copyFile);
-                BufferedReader br = new BufferedReader(new FileReader(ogFile));
-                while((line = br.readLine())!= null) {
-                    fw.write(line + "\n");
-                }
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
         String[] serverFiles = serverFolder.list();
+        for(int i=0;i<serverFiles.length;i++){
+            System.out.println(serverFiles[i]);
+        }
         return serverFiles;
     }
     // functionality of upload: we have the parameter as the path to the shared folder of the local client
     // create a new shared folder for the server if not created
     // read the text from the selected file from the client folder (fileName)
     // create a new file in the server folder (copyFile) and write all of the texts from fileName to copyFile
-    public void handleUpload(File baseDir,String fileName) {
-        File clientFile = new File(baseDir, fileName);
+    public void handleUpload(File clientDir,String fileName) {
+        File clientFile = new File(clientDir, fileName);
 //ADDED FILENAME SO WE CAN WRITE TO IT
         File serverFile = new File("./src/shared", fileName);
 
@@ -141,9 +120,6 @@ public class ServerThread extends Thread{
                 BufferedReader br = new BufferedReader(new FileReader(clientFile));
                 while((line = br.readLine())!= null) {
                     fw.write(line);
-
-//DONT THINK WE NEED TO OUT.PRINT IT
-                    out.println(line);
                 }
             }catch(IOException e) {
                 e.printStackTrace();
@@ -166,6 +142,7 @@ public class ServerThread extends Thread{
                 BufferedReader br = new BufferedReader(new FileReader(serverFile));
                 while((line = br.readLine()) != null) {
                     fw.write(line);
+                    System.out.println(line);
                 }
             }catch(IOException e) {
                 e.printStackTrace();
