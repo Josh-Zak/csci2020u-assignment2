@@ -42,7 +42,7 @@ public class Controller {
         local.setItems(items1);
         fileShareClient = new Client();
         setArgs(Main.getArgs());
-        ServerThread.handleDownload(serverList[0]);
+//        ServerThread.handleDownload(serverList[0]);
         System.out.println(argument);
 
 
@@ -61,6 +61,7 @@ public class Controller {
         String selected = server.getSelectionModel().getSelectedItem().toString();
         String downloadMessage = "DOWNLOAD " + selected + " " + argument.get(2);
         fileShareClient.send(downloadMessage);
+        local.getItems().add(selected);
         fileShareClient.listen();
     }
 
@@ -71,6 +72,7 @@ public class Controller {
         String selected = local.getSelectionModel().getSelectedItem().toString();
         String uploadMessage = "UPLOAD " + selected + " " + argument.get(2);
         fileShareClient.send(uploadMessage);
+        server.getItems().add(selected);
         fileShareClient.listen();
     }
 }

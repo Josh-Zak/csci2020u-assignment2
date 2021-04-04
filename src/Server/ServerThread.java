@@ -66,12 +66,9 @@ public class ServerThread extends Thread{
             String[] fileName = handleDir();
         }else if(command.equalsIgnoreCase("UPLOAD")){
             File baseDir = new File("./src/test");
-<<<<<<< HEAD
             handleUpload(baseDir,"text.txt");
             out.println("upload shared");
-=======
             handleUpload(baseDir,file);
->>>>>>> 3633f59493513ca03ff65316ce424a4d6a01f3db
 //in.print(file contents) to the new file on server side
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
             handleDownload(file);
@@ -133,7 +130,7 @@ public class ServerThread extends Thread{
 
     //functionality of download: read the text in the fileName file,
     // print out the file to the client
-    public static void handleDownload(String fileName){
+    public void handleDownload(String fileName){
         File serverFile = new File("./src/shared",fileName);
         File clientFile = new File("./src/test", fileName);
         String line = "";
