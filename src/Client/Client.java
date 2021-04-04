@@ -51,9 +51,6 @@ public class Client extends Frame {
     }
 
     protected void listen() throws IOException {
-        if(socket.isClosed()){
-
-        }
         String message = in.readLine();//Receives response after giving dir/download/upload (msg from server)
         System.out.println(message);
         socket.close();

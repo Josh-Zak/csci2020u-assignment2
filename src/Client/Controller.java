@@ -42,7 +42,6 @@ public class Controller {
         local.setItems(items1);
         fileShareClient = new Client();
         setArgs(Main.getArgs());
-//        ServerThread.handleDownload(serverList[0]);
         System.out.println(argument);
 
 

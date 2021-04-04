@@ -29,6 +29,7 @@ public class ServerThread extends Thread{
         String line = null;
         try {
             while((line = in.readLine()) != null){
+                System.out.println(line);
                 process(line);
             }
         }catch(IOException e) {
@@ -65,13 +66,13 @@ public class ServerThread extends Thread{
             out.println("dir");
             String[] fileName = handleDir();
         }else if(command.equalsIgnoreCase("UPLOAD")){
-            File baseDir = new File("./src/test");
-            handleUpload(baseDir,"text.txt");
-            out.println("upload shared");
+            File baseDir = new File("./src/" + args);
             handleUpload(baseDir,file);
+            out.println("upload shared");
 //in.print(file contents) to the new file on server side
         }else if(command.equalsIgnoreCase("DOWNLOAD")){
             handleDownload(file);
+            out.println("download shared");
 //out.print(file contents) to the new file on the client side
         }else{
             out.println("Not a command");
@@ -130,7 +131,7 @@ public class ServerThread extends Thread{
 
     //functionality of download: read the text in the fileName file,
     // print out the file to the client
-    public void handleDownload(String fileName){
+    public static void handleDownload(String fileName){
         File serverFile = new File("./src/shared",fileName);
         File clientFile = new File("./src/test", fileName);
         String line = "";
@@ -143,7 +144,6 @@ public class ServerThread extends Thread{
                 BufferedReader br = new BufferedReader(new FileReader(serverFile));
                 while((line = br.readLine()) != null) {
                     fw.write(line);
-                    System.out.println(line);
                 }
             }catch(IOException e) {
                 e.printStackTrace();
